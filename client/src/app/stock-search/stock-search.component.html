@@ -1,0 +1,36 @@
+<div class="container">
+    <div id="title" class="mb-4">
+        STOCK SEARCH
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+        <div class="row justify-content-center">
+            <input class="form-control pl-3 col-8" 
+                   type="text" 
+                   placeholder="Enter stock name" 
+                   id="search-bar" 
+                   name="ticker" 
+                   formControlName="ticker" 
+                   (keyup)="search()" matInput 
+                   [matAutocomplete]="auto">
+            <button class="btn pt-1 ml-n5" type="submit" id="search-btn">
+                <svg width="15px" height="15px" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                    <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                </svg>
+            </button>
+        </div>
+
+        <mat-autocomplete #auto="matAutocomplete" [panelWidth]="185" class="ml-3 mt-n2">
+            <mat-option *ngIf="isLoading">
+                <mat-spinner [diameter]="40" class="ml-1 mt-1"></mat-spinner>
+            </mat-option>
+            <div *ngIf="!isLoading">
+                <mat-option *ngFor="let result of searchResults" [value]="result.ticker">
+                    {{ result.ticker }} <span id="ticker-name">| {{ result.name }}</span>
+                </mat-option>
+            </div>
+        </mat-autocomplete>
+    </form>
+
+</div>
